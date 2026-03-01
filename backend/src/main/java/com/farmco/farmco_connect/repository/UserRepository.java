@@ -1,5 +1,6 @@
 package com.farmco.farmco_connect.repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Boolean existsByUsername(String username);
 
     User findByUsernameAndPassword(String username, String password);
+
+    List<User> findByLocationCodeIgnoreCaseOrLocationNameIgnoreCase(String code, String name);
 }
