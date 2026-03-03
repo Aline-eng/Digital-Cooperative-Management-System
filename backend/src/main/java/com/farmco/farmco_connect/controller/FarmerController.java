@@ -3,6 +3,7 @@ package com.farmco.farmco_connect.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,16 @@ public class FarmerController {
             return new ResponseEntity<>("No farmers found", HttpStatus.NOT_FOUND);
         }
 
+        return new ResponseEntity<>(farmers, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/paged", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<Farmer>> getFarmersPaginatedAndSorted(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction) {
+        Page<Farmer> farmers = farmerService.getFarmersPaginatedAndSorted(page, size, sortBy, direction);
         return new ResponseEntity<>(farmers, HttpStatus.OK);
     }
 }

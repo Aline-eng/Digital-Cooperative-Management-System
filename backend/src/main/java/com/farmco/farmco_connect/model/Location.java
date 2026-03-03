@@ -1,11 +1,16 @@
 package com.farmco.farmco_connect.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +22,14 @@ public class Location {
     private UUID id;
     private String name;
     private String code;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "location")
+    private List<Farmer> farmers = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "location")
+    private List<User> users = new ArrayList<>();
     
     public UUID getId() {
         return id;
@@ -40,5 +53,21 @@ public class Location {
     
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public List<Farmer> getFarmers() {
+        return farmers;
+    }
+
+    public void setFarmers(List<Farmer> farmers) {
+        this.farmers = farmers;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

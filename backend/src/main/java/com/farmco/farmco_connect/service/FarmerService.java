@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.farmco.farmco_connect.model.Farmer;
@@ -50,5 +54,11 @@ public class FarmerService {
         }
 
         return farmers;
+    }
+
+    public Page<Farmer> getFarmersPaginatedAndSorted(int page, int size, String sortBy, String direction) {
+        Sort.Direction sortDirection = Sort.Direction.fromOptionalString(direction).orElse(Sort.Direction.ASC);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortBy));
+        return farmerRepository.findAll(pageable);
     }
 }

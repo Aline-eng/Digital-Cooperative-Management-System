@@ -26,7 +26,7 @@ public class Payment {
     private PaymentStatus status;
 
     @OneToOne
-    @JoinColumn(name="harvest_id")
+    @JoinColumn(name = "harvest_id", unique = true)
     private Harvest harvest;
 
     public UUID getId() {
